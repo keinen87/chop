@@ -1,0 +1,10 @@
+Django==2.2.9
+django-bootstrap-form==3.4
+environs==7.1.0
+marshmallow==3.3.0
+Pillow==6.2.1
+pkg-resources==0.0.0
+python-dotenv==0.10.3
+pytils==0.3
+pytz==2019.3
+sqlparse==0.3.0

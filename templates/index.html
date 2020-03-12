@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+
+{% block navbar_search %}
+<form class="form-inline" action="{% url 'profile_list' %}">
+  <input class="form-control mr-sm-2" type="text" name="searchtext" placeholder="Введите запрос" aria-label="Search">
+  <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Поиск</button>
+</form>
+{% endblock %}
+
+{% block navbar_menu %}
+  <form class="form-inline" action="{% url 'profile_new' %}">
+    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Добавить сотрудника</button>
+  </form>
+{% endblock %}
+
+{% block body %}
+
+{% block content %}
+
+{% for profile in profiles %}       
+<div class="card">
+  <div class="card-body">
+      <p class="card-text">{{ profile.surname }} {{ profile.name }} {{ profile.middle_name }}</p>
+      <a href="{% url 'profile_detail' slug=profile.slug %}" class="card-link"><span class="badge badge-secondary">Открыть карточку</span></a>
+      <a href="{% url 'profile_update' slug=profile.slug %}" class="card-link"><span class="badge badge-secondary">Редактировать карточку</span></a>
+      <!--<a href="{% url 'profile_delete' slug=profile.slug %}" class="card-link"><span class="badge badge-secondary">Удалить карточку</span></a>-->
+  </div>
+</div>
+{% endfor %}
+
+{% endblock %}
+
+
+{% block paging %}
+<nav aria-label="...">
+  <ul class="pagination justify-content-center">
+    {% if profiles.has_previous %}
+    <li class="page-item"><a class="page-link" href="?page={{profiles.previous_page_number}}">Назад</a></li>
+    <li class="page-item"><a class="page-link" href='?page={{profiles.number|add:"-1"}}'>{{profiles.number|add:"-1"}}</a></li>
+    {% else %}
+      <li class="page-item disabled">
+        <span class="page-link">Назад</span>
+      </li>
+    {% endif %}
+    <li class="page-item active">
+      <span class="page-link">
+        {{ profiles.number }}
+        <span class="sr-only">(current)</span>
+      </span>
+    </li>
+    {% if profiles.has_next %}
+    <li class="page-item">
+        <li class="page-item"><a class="page-link" href='?page={{profiles.number|add:"1"}}'>{{profiles.number|add:"1"}}</a></li>
+        <a class="page-link" href="?page={{profiles.next_page_number}}">Вперёд</a>
+    </li>
+    {% else %}
+    <li class="page-item disabled">
+      <span class="page-link">Вперёд</span>
+    </li>
+    {% endif %}
+
+  </ul>
+</nav>
+
+{% endblock %}
+
+{% endblock %}

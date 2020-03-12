@@ -1,0 +1,71 @@
+{% extends 'index.html' %}
+
+{% block navbar_search %}
+{% endblock %}
+
+{% block navbar_menu %}
+<div class="row"> 
+  <form class="form-inline my-2 my-sm-0 mr-2" action="{% url 'profile_delete' slug=profile.slug %}">
+  <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Удалить карточку</button>
+  </form>
+  <form class="form-inline my-2 my-sm-0 mr-3" action="{% url 'profile_update' slug=profile.slug %}">
+    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Редактировать карточку</button>
+  </form>
+</div>  
+{% endblock %}
+
+{% block body %}
+<div class="card mb-3" style="max-width: 100%;">
+    <h2 class="card-title text-center text-muted">Карточка сотрудника</h2>
+    <div class="row no-gutters">
+      <div class="col-lg-3 mt-4">
+        <img src="{{ MEDIA_URL }}{{ profile.photo }}" class="img-thumbnail ml-2 mb-2" alt="..." width="500" height="400">
+        <h5 class="card-title text-center">{{ profile.surname }} {{ profile.name }} {{ profile.middle_name }}</h5>
+        <p class="card-text text-center">{{ profile.department }}<p>
+        <p class="card-text text-center">{{ profile.position }}<p>  
+        <p class="card-text text-center"><small class="text-muted">Всего взысканий - {{ punishments|length }}</small></p>
+      </div>
+      <div class="col-lg-9">
+        <div class="card-body">
+              <table class="table card-text mt-2">
+                <thead class="thead-light">
+                        <tr>
+                            <th scope="col">№</th>
+                            <th scope="col">Взыскание</th>
+                            <th scope="col">Приказ №</th>
+                            <th scope="col">Дата</th>
+                            <th scope="col"></th>
+                            <th scope="col"></th>
+                        </tr>
+                        </thead>
+                <tbody>
+                        {% for punishment in punishments %}
+                        <tr>
+                            <th scope="row">{{ forloop.counter }}</th>
+                            <td>{{ punishment.text }}</td>
+                            <td>{{ punishment.order }}</td>
+                            <td>{{ punishment.date}}</td>
+                            <td>
+                                <form action="{% url 'punishment_update' slug=profile.slug id=punishment.id %}">
+                                    <button class="btn btn-outline-secondary btn-sm" type="submit">Редактировать взыскание</button>
+                                </form>  
+                            </td>
+                            <td>
+                              <form action="{% url 'punishment_delete' slug=profile.slug id=punishment.id %}">
+                                  <button class="btn btn-outline-secondary btn-sm" type="submit">Удалить взыскание</button>
+                              </form>  
+                          </td>
+                        </tr>
+                        {% endfor %}
+                        </tbody>        
+              </table>
+              <form class="text-center" action="{% url 'punishment_new' slug=profile.slug %}">
+                  <button class="btn btn-outline-secondary btn-sm" type="submit">Добавить взыскание</button>
+              </form>
+          
+        </div>
+      </div>
+    </div>
+  </div>
+
+{% endblock %}
