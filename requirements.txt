@@ -1,7 +1,7 @@
 Django==2.2.9
 django-bootstrap-form==3.4
 environs==7.1.0
-marshmallow==3.3.0
+marshmallow==3.26.2
 Pillow
 python-dotenv==0.10.3
 pytils==0.3
