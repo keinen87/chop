@@ -1,4 +1,4 @@
-Django==2.2.9
+Django==5.2.16
 django-bootstrap-form==3.4
 environs==7.1.0
 marshmallow==3.3.0
